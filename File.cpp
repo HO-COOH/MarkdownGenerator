@@ -10,20 +10,25 @@ std::string File::getDiscription() const
 {
     if (std::ifstream file{ filepath }; file.is_open())
     {
-        std::string line, description;
+        std::string line;
         bool finished = false, found = false;
-        while (std::getline(file, line) && finished)
+        while (std::getline(file, line) && !finished)
         {
-            auto pos = line.find("Description:");
-            if (pos == std::string::npos)
-                pos = line.find("description:");
-            if (pos != std::string::npos)
+            if (!found)
             {
-                found = true;
-                while (pos != line.size && isspace(line[pos]))
-                    ++pos;
-
+                auto pos = line.find("Description:");
+                if (pos == std::string::npos)
+                    pos = line.find("description:");
+                if (pos != std::string::npos)
+                {
+                    found = true;
+                    while (pos != line.size() && isspace(line[pos]))
+                        ++pos;
+                    if (pos != line.size())
+                        return std::string{ line.cbegin() + pos, line.cend() }; //description is on the same line
+                }
             }
+            return line;
         }
     }
     return std::string();
