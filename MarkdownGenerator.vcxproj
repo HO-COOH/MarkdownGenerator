@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Folder.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Markdown.cpp" />
   </ItemGroup>
   <ItemGroup>
